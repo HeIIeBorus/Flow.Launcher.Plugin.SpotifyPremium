@@ -261,9 +261,13 @@ namespace Flow.Launcher.Plugin.SpotifyPremium
             var volRequest = new PlayerVolumeRequest(volumePercent);
             _spotifyClient.Player.SetVolume(volRequest).GetAwaiter().GetResult();
 
-            // New volume percentage can not be retrieved even after fully waiting for the call to finish.
-            // Manually wait so API can return the updated volume after this call.
-            while (mLastVolume == CurrentVolume) { }
+            // New volume percentage cannot be retrieved even after fully waiting for the call to finish.
+            // Manually poll the API for a short period instead of blocking endlessly.
+            var retries = 20;
+            while (mLastVolume == CurrentVolume && retries-- > 0)
+            {
+                Thread.Sleep(50);
+            }
         }
 
         public void ToggleShuffle()
