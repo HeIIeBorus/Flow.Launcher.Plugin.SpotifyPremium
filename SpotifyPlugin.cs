@@ -65,6 +65,8 @@ namespace Flow.Launcher.Plugin.SpotifyPremium
             _terms.Add("mute", ToggleMute);
             _terms.Add("vol", SetVolume);
             _terms.Add("volume", SetVolume);
+            _terms.Add("up", VolumeUp);
+            _terms.Add("down", VolumeDown);
             _terms.Add("shuffle", ToggleShuffle);
             _terms.Add("unlike", UnlikeCurrentSong);
 
@@ -331,6 +333,42 @@ namespace Flow.Launcher.Plugin.SpotifyPremium
             }
 
             return SingleResultInList($"Volume", $"Current Volume: {cachedVolume}", action: () => { });
+        }
+
+        private List<Result> VolumeUp(string arg = null)
+        {
+            cachedVolume = _client.CurrentVolume;
+            int change = 10;
+            if (!string.IsNullOrWhiteSpace(arg) && int.TryParse(arg, out var step))
+            {
+                change = step;
+            }
+
+            int target = cachedVolume + change;
+            if (target > 100) target = 100;
+
+            return SingleResultInList(
+                $"Increase Volume to {target}",
+                $"Current Volume: {cachedVolume}",
+                action: () => { _client.SetVolume(target); });
+        }
+
+        private List<Result> VolumeDown(string arg = null)
+        {
+            cachedVolume = _client.CurrentVolume;
+            int change = 10;
+            if (!string.IsNullOrWhiteSpace(arg) && int.TryParse(arg, out var step))
+            {
+                change = step;
+            }
+
+            int target = cachedVolume - change;
+            if (target < 0) target = 0;
+
+            return SingleResultInList(
+                $"Decrease Volume to {target}",
+                $"Current Volume: {cachedVolume}",
+                action: () => { _client.SetVolume(target); });
         }
 
         private List<Result> ToggleShuffle(string arg = null)
