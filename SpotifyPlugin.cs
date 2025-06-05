@@ -341,7 +341,7 @@ namespace Flow.Launcher.Plugin.SpotifyPremium
             int change = 10;
             if (!string.IsNullOrWhiteSpace(arg) && int.TryParse(arg, out var step))
             {
-                change = step;
+                change = Math.Abs(step);
             }
 
             int target = cachedVolume + change;
@@ -359,7 +359,7 @@ namespace Flow.Launcher.Plugin.SpotifyPremium
             int change = 10;
             if (!string.IsNullOrWhiteSpace(arg) && int.TryParse(arg, out var step))
             {
-                change = step;
+                change = Math.Abs(step);
             }
 
             int target = cachedVolume - change;

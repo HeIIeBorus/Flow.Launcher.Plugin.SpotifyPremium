@@ -26,8 +26,8 @@ This plugin requires the use of the Spotify Web API, which is only accessible th
 | `` sp pause ``                     | Pause currently playing track                    |
 | `` sp mute ``                      | Toggle Mute                                      |
 | `` sp volume {level}``             | Set Volume (absolute 1-100 or relative +/- 20)   |
-| `` sp up {amount}``                | Increase volume (default 10 if amount omitted)   |
-| `` sp down {amount}``              | Decrease volume (default 10 if amount omitted)   |
+| `` sp up {amount}``                | Increase volume (default 10; amount must be positive)   |
+| `` sp down {amount}``              | Decrease volume (default 10; amount must be positive)   |
 | `` sp device ``                    | Set Active Device                                |
 | `` sp shuffle ``                   | Toggle Shuffle Mode                              |
 | `` sp reconnect ``                 | Force a full reconnection                        |
